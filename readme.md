@@ -14,4 +14,4 @@
 ### Materials folder contains the study materials
  - Chimeric Face_Eye Tracker.py is for the experimental task with eyetracking
  - online_Pavlovia: shows the code for the online task (no eyetracking)
- - Final Face Stimuli is called by 1 and includes all face stimuli
+ - Final Face Stimuli is called by 1 and includes a subset of the face stimuli. The full set is not covered by the open license, but may be requested from the authors.
