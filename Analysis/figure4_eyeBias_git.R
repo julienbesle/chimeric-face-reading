@@ -54,7 +54,7 @@ if(savePDF==1){
 #### IF DO MODELS ==1--------
 nLangLevels<-20
 if(doLM==1){
-  ###### 1. FIG 3B X coordinates-----
+  ###### 1. FIG 4B X coordinates-----
   ### aggregate models 
   ## previous model comparisons justify dropping im and hemifield from these analyses
   tmpdat<-aggregate(fixX~id+angle2+aoi+age, data=eyedat, mean)
@@ -68,30 +68,20 @@ if(doLM==1){
   print(confint(lmx.0, parm = "(Intercept)"))
   # estimated marginal means for each face
   print(emmeans(lmx.0, ~ aoi))
+  # estimated marginal means for each language for each face
+  emmeans(lmx.0, ~ angle2 | aoi,
+          at = list(angle2 = c(-1, 0, 1)))
   # r-squared
   print(r.squaredGLMM(lmx.0))
   efx<-effect("angle2:aoi", lmx.0, xlevels=list(angle2=seq(-1, 1, length.out=nLangLevels)))
   efx<-data.frame(efx)
-  
-  ### this model parses compression from left bias:
-  tmpdat$screenPos <- c(1,0,-1)[tmpdat$aoi]
-  tmpdat$aoi2 <- factor(tmpdat$aoi,levels = c("1. left", "2. center", "3. right"))
-  contrasts(tmpdat$aoi2) <- cbind(
-    compression = c( 1,  0, -1),
-    middle      = c(1,  -2, 1)
-  )
-  m_orth <- lmer(fixX ~ angle2 * aoi2 + (1 | id),data = tmpdat)
-  summary(m_orth)
-  confint(m_orth, parm = "(Intercept)")
-  confint(m_orth, parm = "aoi2compression")
-  confint(m_orth, parm = "angle2:aoi2compression")
   
   ### including age as covariate
   lmx.0.age<-lmer(fixX~age+angle2*aoi+(1|id), data=tmpdat)
   print(Anova(lmx.0.age, type="II"))
   print(anova(lmx.0, lmx.0.age))
   
-  #### 2. FIG 3C Y coordinates-----
+  #### 2. FIG 4C Y coordinates-----
   tmpdat<-aggregate(fixY~id+angle2+aoi, data=eyedat, mean)
   lmy.0<-lmer(fixY~angle2*aoi+(1|id), data=tmpdat)
   print("y-coordinates")
@@ -101,7 +91,7 @@ if(doLM==1){
   efy<-effect("angle2:aoi", lmy.0, xlevels=list(angle2=seq(-1, 1, length.out=nLangLevels)))
   efy<-data.frame(efy)
   
-  #### 3. FIG 3D First fixation-----
+  #### 3. FIG 4D First fixation-----
   tmpdat<-aggregate(firstFixNum~id+angle2+aoi, data=eyedat[eyedat$aoi !="2. center",], mean)
   lmff.0<-lmer(firstFixNum~angle2*aoi+(1|id), data=tmpdat)
   print("first fix")
@@ -111,7 +101,7 @@ if(doLM==1){
   efff<-data.frame(ef1)
   r.squaredGLMM(lmff.0)
   
-  #### 4. FIG 3E N fixations-----
+  #### 4. FIG 4E N fixations-----
   tmpdat<-aggregate(nFixations~id+angle2+aoi, data=eyedat[eyedat$aoi !="2. center",], mean)
   lmnfix.0<-lmer(nFixations~angle2*aoi+(1|id), data=tmpdat)
   print("n. fixations")
@@ -145,7 +135,7 @@ plotmat<-rbind(c(1,1,1,1, 2,2,2,2, 3,3,3,3),
 layout(plotmat)
 
 ## FIGURES----
-##### 3A: Gaze on faces -----
+##### 4A: Gaze on faces -----
 xlimval<-1.95 # axis range
 ylimval<-1.95
 facexlimval<-2.54 # face range is bigger than axis range to zoom
@@ -222,7 +212,7 @@ plotdat<-ddply(eyedat, .(aoi), function(plotdat){
 })
 
 
-##### 3B: X coordinate - language x roi interaction effects plot-----
+##### 4B: X coordinate - language x roi interaction effects plot-----
 par(mar=c(4,4,3,2))
 par(xpd=FALSE)
 plot(c(-1,1), c(-1, 1), xlab="", ylab="", axes=FALSE, col="white")
@@ -275,7 +265,7 @@ plotdat<-ddply(efx, .(aoi), function(plotdat){
   
 })
 
-##### 3C: Y coordinate - language x roi interaction effects plot-----
+##### 4C: Y coordinate - language x roi interaction effects plot-----
 #par(mar=c(4,4,2,2))
 par(mar=c(4,3,3,3))
 par(xpd=FALSE)
@@ -323,7 +313,7 @@ plotdat<-ddply(eyedat, .(aoi), function(plotdat){
          bg=c(scales::alpha(col1, ptalpha), scales::alpha(col2, ptalpha), scales::alpha(col3, ptalpha)), cex=ptcex, lwd=1)
 })
 
-##### 3D: firstFixNum ------
+##### 4D: firstFixNum ------
 par(mar=c(4,3,3,3))
 plot(efff$angle2, efff$fit, xlim=c(-1,1), ylim=c(1,3), axes=FALSE, pch=19,
      col="white",
@@ -360,7 +350,7 @@ plotdat<-ddply(efff, .(aoi), function(plotdat){
 })
 
 
-##### 3E: N fixations-----
+##### 4E: N fixations-----
 par(mar=c(4,2,3,4))
 plot(nfixeffect$angle2, nfixeffect$fit, axes=FALSE, pch=19,
      col="white", xlab="", ylab="", ylim=c(1,3))
