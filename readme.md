@@ -4,7 +4,7 @@ All analyses described in the manuscript are included in the **Analysis** folder
 ### Analysis folder
 contains R scripts used to run analyses and produce corresponding manuscript figures
  - figures[2-5]_*_git.R: compute the statistical models for and plot those respective figures, calling on the single-trial files in the **Data** folder
- - **eyetracking_preprocessing** folder contains two R scripts used to pre-process the raw eyetracking data, resulting in eyedat_clean.csv provided in the **Data** folder. Raw eye-tracking data are not provided but can be requested from the authors.
+ - **eyetracking_preprocessing** folder contains two R scripts used to pre-process the raw eyetracking data, resulting in eyedat_clean.csv provided in the **Data** folder. Raw eye-tracking data are not provided.
  - **figures** folder contains the figures produced by the above R scripts
  - **PNG** folder contains image files used as background in figures 3, 4
  - ovalCoordinates.csv: used for some plots
