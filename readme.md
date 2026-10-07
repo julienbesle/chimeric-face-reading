@@ -19,4 +19,6 @@ contains compiled single-trial data files
 contains the study materials
  - Chimeric Face_Eye Tracker.py is for the experimental task with eyetracking
  - **online_Pavlovia** folder contains the code for the online task (no eyetracking)
- - **Final Face Stimuli** folder includes a subset of the face stimuli called by the experimental scripts. The full set of faces is not covered by the open license, but may be requested from the authors.
+ - **Final Face Stimuli** folder includes a subset of the face stimuli called by the experimental scripts. The full set of faces is not covered by the open license, but may be requested from the authors. Stimuli derived from the same face have the same number in the file name (e.g., O80, M80, LL80, RR80), with O the original face images, M the mirror-reversed versions, and LL and RR the left and right chimeric versions.
+ 
+ 
